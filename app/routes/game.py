@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, make_response
 from flask_login import login_required, current_user
 from app import db
 from app.models import *
 import os
+import pandas as pd
 
 bp = Blueprint('game', __name__)
 
@@ -100,11 +101,51 @@ def add_game_old():
 
     return render_template('add_game.html')
 
+@bp.route('/download_favorites_csv')
+@login_required  # Certifique-se de que o usuário está logado
+def download_favorites_csv():
+    user_id = current_user.id  # Obtém o ID do usuário atual
+    favorites = UserGameAssociation.query.filter_by(user_id=user_id).all()  # Obtém os jogos favoritos do usuário
+    # Cria uma lista para armazenar os dados dos jogos favoritos
+    data = []
+
+    for favorite in favorites:
+        game = Game.query.get(favorite.game_id)
+        if game:  # Verifica se o jogo existe
+            data.append({
+                'Nome': game.name,
+                'Plataforma': game.platform,
+                'Ano de Lançamento': game.release_year,
+                'Desenvolvedora': game.developer,
+                'Gênero': game.genre,
+                'Descrição': game.description,
+                'Nota': favorite.rating
+            })
+
+    # Cria um DataFrame do pandas
+    df = pd.DataFrame(data)
+
+    # Cria a resposta #utf-8-sig #ISO-8859-1
+    output = make_response(df.to_csv(index=False, sep=';', encoding='ISO-8859-1'))
+    output.headers["Content-Disposition"] = "attachment; filename=Meus Jogos.csv"
+    output.headers["Content-Type"] = "text/csv; charset=ISO-8859-1"
+
+    return output
+
+@bp.route('/list_and_add_games_old')
+@login_required
+def list_and_add_games_old():
+    all_games = Game.query.all()
+    return render_template('list_and_add_games_old.html', games=all_games)
+
 @bp.route('/list_and_add_games')
 @login_required
 def list_and_add_games():
-    all_games = Game.query.all()
-    return render_template('list_and_add_games.html', games=all_games)
+    page = request.args.get('page', 1, type=int)  # Obtém o número da página da query string, padrão é 1
+    per_page = 3  # Número de jogos por página
+    games = Game.query.paginate(page=page, per_page=per_page)  # Pagina os jogos
+
+    return render_template('list_and_add_games.html', games=games)
 
 @bp.route('/search_and_add_games')
 @login_required
