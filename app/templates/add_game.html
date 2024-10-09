@@ -1,29 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Add New Game</h1>
-    <form method="POST">
-        <label for="name">Game Name:</label>
-        <input type="text" name="name" required>
-
-        <label for="platform">Platform:</label>
-        <input type="text" name="platform" required>
-
-        <label for="release_year">Release Year:</label>
-        <input type="number" name="release_year" required>
-
-        <label for="developer">Developer:</label>
-        <input type="text" name="developer" required>
-
-        <label for="style">Style:</label>
-        <input type="text" name="style" required>
-
-        <label for="publisher">Publisher:</label> <!-- Novo campo publisher -->
-        <input type="text" name="publisher" required>
-
-        <label for="description">Description:</label>
-        <textarea name="description"></textarea>
-
-        <button type="submit">Add Game</button>
-    </form>
+<h2>Adicionar Novo Jogo</h2>
+<form action="{{ url_for('game.add_game') }}" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Nome do Jogo:</label>
+        <input type="text" class="form-control" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="platform">Plataforma:</label>
+        <input type="text" class="form-control" name="platform" required>
+    </div>
+    <div class="form-group">
+        <label for="release_year">Ano de Lançamento:</label>
+        <input type="number" class="form-control" name="release_year">
+    </div>
+    <div class="form-group">
+        <label for="developer">Desenvolvedora:</label>
+        <input type="text" class="form-control" name="developer">
+    </div>
+    <div class="form-group">
+        <label for="publisher">Distribuidora:</label>
+        <input type="text" class="form-control" name="publisher">
+    </div>
+    <div class="form-group">
+        <label for="genre">Gênero:</label>
+        <input type="text" class="form-control" name="genre">
+    </div>
+    <div class="form-group">
+        <label for="description">Descrição:</label>
+        <textarea class="form-control" name="description"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="cover_image">Capa do Jogo:</label>
+        <input type="file" class="form-control" name="cover_image" accept="image/*" required>
+    </div>
+    <div class="form-group">
+        <label for="additional_images">Imagens Adicionais:</label>
+        <input type="file" class="form-control" name="additional_images" accept="image/*" multiple>
+    </div>
+    <button type="submit" class="btn btn-primary">Adicionar Jogo</button>
+</form>
 {% endblock %}

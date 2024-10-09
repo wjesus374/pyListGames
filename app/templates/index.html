@@ -1,22 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Your Wishlist</h1>
+    <h1 class="mt-4">Lista de Jogos</h1>
     {% if games %}
-        <ul>
+
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nome do Jogo</th>
+                <th>Plataforma</th>
+                <th>Mídia</th>
+                <th>Rating</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for user_game in games %}
-                <li>
-                    <strong>{{ user_game.game.name }} ({{ user_game.game.platform }})</strong><br>
-                    Media: {{ user_game.media }}<br>
-                    Rating: {{ user_game.rating }}/100
+            <tr>
+                <td>{{ user_game.game.name }}</td>
+                <td>{{ user_game.game.platform }}</td>
+                <td>{{ user_game.media }}</td>
+                <td>{{ user_game.rating }}/100</td>
+                <td>
                     <form action="{{ url_for('game.remove_from_wishlist', game_id=user_game.game_id) }}" method="POST" style="display:inline;">
-                        <button type="submit">Remove</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                     </form>
-                    <a href="{{ url_for('game.edit_wishlist', game_id=user_game.game_id) }}">Edit</a>
-                </li>
+                    <a href="{{ url_for('game.edit_wishlist', game_id=user_game.game_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
             {% endfor %}
-        </ul>
+        </tbody>
+    </table>
     {% else %}
-        <p>You haven't added any games to your wishlist yet.</p>
+        <h1 class="mt-4">Você não tem nenhum jogo na sua lista</h1>
     {% endif %}
 {% endblock %}

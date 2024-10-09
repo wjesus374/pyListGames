@@ -55,3 +55,41 @@ input, select, textarea {
     width: 100%;
     max-width: 400px;
 }
+
+/* Estilização do campo de busca */
+#game-search {
+    width: 100%; /* Ocupa toda a largura disponível */
+    max-width: 400px; /* Limita a largura máxima */
+    padding: 8px; /* Adiciona preenchimento */
+    margin-bottom: 10px; /* Espaçamento abaixo do campo */
+    border: 1px solid #ccc; /* Borda do campo */
+    border-radius: 4px; /* Borda arredondada */
+}
+
+/* Estilização da lista de sugestões */
+#game-suggestions {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Borda arredondada */
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    width: calc(50% - 20px); /* Ajusta a largura ao campo de busca */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilização dos itens da lista */
+#game-suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+#game-suggestions li:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+/* Para evitar que a lista de sugestões se estenda além do campo de busca */
+body {
+    position: relative; /* Necessário para o posicionamento absoluto da lista */
+}

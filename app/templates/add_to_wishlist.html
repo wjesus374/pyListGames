@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Add {{ game.name }} to your Wishlist</h1>
+    <h1>Adicione o <b>{{ game.name }} </b> na sua lista</h1>
     <form method="POST">
-        <label for="media">Media:</label>
+        <label for="media">Mídia:</label>
         <select name="media" required>
-            <option value="physical">Physical</option>
-            <option value="digital">Digital</option>
+            <option value="Física">Física</option>
+            <option value="Digital">Digital</option>
         </select>
 
         <label for="rating">Rating (0-100):</label>

@@ -17,9 +17,10 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
-    from app.routes import auth, game
+    from app.routes import auth, game, admin
     app.register_blueprint(auth.bp)
     app.register_blueprint(game.bp)
+    app.register_blueprint(admin.bp)
 
     with app.app_context():
         db.create_all()
