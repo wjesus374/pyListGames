@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your Wishlist</h1>
+    {% if games %}
+        <ul>
+            {% for user_game in games %}
+                <li>
+                    <strong>{{ user_game.game.name }} ({{ user_game.game.platform }})</strong><br>
+                    Media: {{ user_game.media }}<br>
+                    Rating: {{ user_game.rating }}/100
+                    <form action="{{ url_for('game.remove_from_wishlist', game_id=user_game.game_id) }}" method="POST" style="display:inline;">
+                        <button type="submit">Remove</button>
+                    </form>
+                    <a href="{{ url_for('game.edit_wishlist', game_id=user_game.game_id) }}">Edit</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't added any games to your wishlist yet.</p>
+    {% endif %}
+{% endblock %}

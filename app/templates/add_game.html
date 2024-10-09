@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add New Game</h1>
+    <form method="POST">
+        <label for="name">Game Name:</label>
+        <input type="text" name="name" required>
+
+        <label for="platform">Platform:</label>
+        <input type="text" name="platform" required>
+
+        <label for="release_year">Release Year:</label>
+        <input type="number" name="release_year" required>
+
+        <label for="developer">Developer:</label>
+        <input type="text" name="developer" required>
+
+        <label for="style">Style:</label>
+        <input type="text" name="style" required>
+
+        <label for="publisher">Publisher:</label> <!-- Novo campo publisher -->
+        <input type="text" name="publisher" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description"></textarea>
+
+        <button type="submit">Add Game</button>
+    </form>
+{% endblock %}

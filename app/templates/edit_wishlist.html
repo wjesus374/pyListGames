@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit {{ user_game.game.name }} in your Wishlist</h1>
+    <form method="POST">
+        <label for="media">Media:</label>
+        <select name="media" required>
+            <option value="physical" {% if user_game.media == 'physical' %}selected{% endif %}>Physical</option>
+            <option value="digital" {% if user_game.media == 'digital' %}selected{% endif %}>Digital</option>
+        </select>
+
+        <label for="rating">Rating (0-100):</label>
+        <input type="number" name="rating" min="0" max="100" value="{{ user_game.rating }}" required>
+
+        <button type="submit">Save Changes</button>
+    </form>
+{% endblock %}

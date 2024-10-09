@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add {{ game.name }} to your Wishlist</h1>
+    <form method="POST">
+        <label for="media">Media:</label>
+        <select name="media" required>
+            <option value="physical">Physical</option>
+            <option value="digital">Digital</option>
+        </select>
+
+        <label for="rating">Rating (0-100):</label>
+        <input type="number" name="rating" min="0" max="100" required>
+
+        <button type="submit">Add to Wishlist</button>
+    </form>
+{% endblock %}
