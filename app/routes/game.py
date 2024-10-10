@@ -142,10 +142,48 @@ def list_and_add_games_old():
 @login_required
 def list_and_add_games():
     page = request.args.get('page', 1, type=int)  # Obtém o número da página da query string, padrão é 1
-    per_page = 3  # Número de jogos por página
-    games = Game.query.paginate(page=page, per_page=per_page)  # Pagina os jogos
+    per_page = 5  # Número de jogos por página
 
-    return render_template('list_and_add_games.html', games=games)
+    # Filtros
+    game_name = request.args.get('name', '', type=str)
+    selected_platforms = request.args.getlist('platform')
+    developer = request.args.get('developer', '', type=str)
+    release_year = request.args.get('release_year', '', type=int)
+    genre = request.args.get('genre', '', type=str)
+
+    # Query dinâmica
+    query = Game.query
+    if game_name:
+        query = query.filter(Game.name.ilike(f'%{game_name}%'))
+    if selected_platforms:
+        query = query.filter(Game.platform.in_(selected_platforms))
+    if developer:
+        query = query.filter(Game.developer.ilike(f'%{developer}%'))
+    if release_year:
+        query = query.filter_by(release_year=release_year)
+    if genre:
+        query = query.filter(Game.genre.ilike(f'%{genre}%'))
+
+    # Paginação da query
+    games = query.paginate(page=page, per_page=per_page)
+
+    # Calcular os valores de start_page e end_page
+    start_page = max(1, games.page - 2)
+    end_page = min(games.pages, games.page + 2)
+
+    # Obter plataformas únicas para o filtro
+    platforms = Game.query.with_entities(Game.platform).distinct().all()
+    platforms = [platform[0] for platform in platforms]
+
+    # Renderizar o template com as variáveis necessárias
+    return render_template('list_and_add_games.html', games=games, filters={
+        'name': game_name,
+        'platform': selected_platforms,
+        'developer': developer,
+        'release_year': release_year,
+        'genre': genre
+    }, platforms=platforms, start_page=start_page, end_page=end_page)
+
 
 @bp.route('/search_and_add_games')
 @login_required
