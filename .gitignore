@@ -1,6 +1,4 @@
 #Não enviar o .venv
 .venv
-#Não enviar a pasta do rawg
-rawg
 #Não enviar o pycache
 __pycache__

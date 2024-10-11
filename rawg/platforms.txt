@@ -1,0 +1,56 @@
+ID: 187 - Nome: PlayStation 5
+ID: 4 - Nome: PC
+
+ID: 18 - Nome: PlayStation 4
+ID: 7 - Nome: Nintendo Switch
+ID: 1 - Nome: Xbox One
+ID: 186 - Nome: Xbox Series S/X
+
+
+ID: 14 - Nome: Xbox 360
+ID: 80 - Nome: Xbox
+ID: 16 - Nome: PlayStation 3
+ID: 15 - Nome: PlayStation 2
+ID: 27 - Nome: PlayStation
+
+ID: 8 - Nome: Nintendo 3DS
+ID: 9 - Nome: Nintendo DS
+ID: 13 - Nome: Nintendo DSi
+
+
+ID: 19 - Nome: PS Vita
+ID: 17 - Nome: PSP
+ID: 10 - Nome: Wii U
+ID: 11 - Nome: Wii
+ID: 105 - Nome: GameCube
+ID: 83 - Nome: Nintendo 64
+ID: 24 - Nome: Game Boy Advance
+ID: 43 - Nome: Game Boy Color
+ID: 26 - Nome: Game Boy
+ID: 79 - Nome: SNES
+ID: 49 - Nome: NES
+ID: 55 - Nome: Classic Macintosh
+ID: 41 - Nome: Apple II
+ID: 166 - Nome: Commodore / Amiga
+ID: 28 - Nome: Atari 7800
+ID: 31 - Nome: Atari 5200
+ID: 23 - Nome: Atari 2600
+ID: 22 - Nome: Atari Flashback
+ID: 25 - Nome: Atari 8-bit
+ID: 34 - Nome: Atari ST
+ID: 46 - Nome: Atari Lynx
+ID: 50 - Nome: Atari XEGS
+ID: 167 - Nome: Genesis
+ID: 107 - Nome: SEGA Saturn
+ID: 119 - Nome: SEGA CD
+ID: 117 - Nome: SEGA 32X
+ID: 74 - Nome: SEGA Master System
+ID: 106 - Nome: Dreamcast
+ID: 111 - Nome: 3DO
+ID: 112 - Nome: Jaguar
+ID: 77 - Nome: Game Gear
+ID: 12 - Nome: Neo Geo
+ID: 5 - Nome: macOS
+ID: 6 - Nome: Linux
+ID: 3 - Nome: iOS
+ID: 21 - Nome: Android
