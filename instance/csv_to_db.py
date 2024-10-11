@@ -10,7 +10,7 @@ conn = sqlite3.connect(DATABASE_URL)
 # Função para importar jogos do CSV
 def import_games_from_csv(csv_file):
     # Ler o arquivo CSV
-    df = pd.read_csv(csv_file, sep=';')
+    df = pd.read_csv(csv_file, sep=';', encoding='iso-8859-1')
 
     # Inserir os dados no banco de dados
     for index, row in df.iterrows():

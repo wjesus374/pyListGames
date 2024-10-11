@@ -12,23 +12,12 @@ bp = Blueprint('game', __name__)
 @bp.route('/')
 @login_required
 def index():
-    #desired_games = UserGameAssociation.query.filter_by(user_id=current_user.id).all()
-
     # Filtros
     game_name = request.args.get('name', '', type=str)
     selected_platforms = request.args.getlist('platform')
     developer = request.args.get('developer', '', type=str)
     release_year = request.args.get('release_year', '', type=int)
     genre = request.args.get('genre', '', type=str)
-
-    #Query dinâmica
-    #query = UserGameAssociation.query
-    #Coletar todos os jogos do usuário
-    #query.filter_by(user_id=current_user.id)
-
-    #query = Game.query
-    #query = query.join(UserGameAssociation)
-    #query = query.filter(UserGameAssociation.user_id == current_user.id)
 
     favorites = UserGameAssociation.query.filter_by(user_id=current_user.id) # Obtém os jogos favoritos do usuário
     # Cria uma lista para armazenar os dados dos jogos favoritos
@@ -65,15 +54,13 @@ def index():
         #for game in query:
         #    print(f"ID: {game.id}, Nome: {game.name}, Ano de Lançamento: {game.release_year}, Publisher: {game.publisher}")
 
-            
-
     # Obter plataformas únicas para o filtro
     platforms = Game.query.with_entities(Game.platform).distinct().all()
     platforms = [platform[0] for platform in platforms]
+    platforms = sorted(platforms)
 
     #for game in query:
     #    print(f"ID: {game.id}, Nome: {game.name}, Ano de Lançamento: {game.release_year}, Publisher: {game.publisher}")
-
 
     return render_template('index.html', games=data, filters={
         'name': game_name,
@@ -82,7 +69,8 @@ def index():
         'release_year': release_year,
         'genre': genre
     }, platforms=platforms)
-
+    
+    #desired_games = UserGameAssociation.query.filter_by(user_id=current_user.id).all()
     #return render_template('index.html', games=desired_games)
 
 @bp.route('/search_games', methods=['GET'])
@@ -207,6 +195,7 @@ def list_and_add_games():
     # Obter plataformas únicas para o filtro
     platforms = Game.query.with_entities(Game.platform).distinct().all()
     platforms = [platform[0] for platform in platforms]
+    platforms = sorted(platforms)
 
     # Renderizar o template com as variáveis necessárias
     return render_template('list_and_add_games.html', games=games, filters={
@@ -350,6 +339,7 @@ def edit_games():
     # Obter plataformas únicas para o filtro
     platforms = Game.query.with_entities(Game.platform).distinct().all()
     platforms = [platform[0] for platform in platforms]
+    platforms = sorted(platforms)
 
     return render_template('edit_games.html', games=games, filters={
         'name': game_name,
@@ -374,7 +364,7 @@ def save_game():
         game.genre = data['genre']
 
         try:
-            release_year = datetime.strptime(data['release_year'], '%Y-%m-%d').date()
+            release_year = datetime.strptime(data['release_year'], '%d-%m-%Y').date()
             game.release_year = release_year
         except Exception as e:
             print("Erro ao salvar data")
