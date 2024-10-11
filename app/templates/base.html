@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <title>{% block title %}Meus Jogos{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     {% block head %}{% endblock %}
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('game.index') }}">Início</a></li>
+    <nav class="navbar">
+        <ul class="navbar-menu">
+            <li class="navbar-item"><a href="{{ url_for('game.index') }}" class="navbar-link">Início</a></li>
             {% if current_user.is_authenticated %}
                 {% if current_user.is_admin %}  <!-- Mostra o botão apenas para administradores -->
-                    <li><a href="{{ url_for('game.add_game') }}">Adicionar jogos</a></li>
-                    <li><a href="{{ url_for('admin.admin_dashboard') }}">Administrar usuários</a></li>
+                    <li class="navbar-item"><a href="{{ url_for('game.add_game') }}" class="navbar-link">Adicionar jogos</a></li>
+                    <li class="navbar-item"><a href="{{ url_for('admin.admin_dashboard') }}" class="navbar-link">Administrar usuários</a></li>
+                    <li class="navbar-item"><a href="{{ url_for('game.edit_games') }}" class="navbar-link">Editar jogos</a></li>
                 {% endif %}
-                <li><a href="{{ url_for('game.search_and_add_games') }}">Procurar jogos</a></li>
-                <li><a href="{{ url_for('game.list_and_add_games') }}">Listar jogos</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                <li class="navbar-item"><a href="{{ url_for('game.search_and_add_games') }}" class="navbar-link">Procurar jogos</a></li>
+                <li class="navbar-item"><a href="{{ url_for('game.list_and_add_games') }}" class="navbar-link">Listar jogos</a></li>
+                
+                <li class="navbar-item"><a href="{{ url_for('auth.logout') }}" class="navbar-link">Logout</a></li>
             {% endif %}
         </ul>
     </nav>
+    
     <div class="content">
         {% block content %}{% endblock %}
     </div>

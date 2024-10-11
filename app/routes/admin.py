@@ -10,7 +10,7 @@ bp = Blueprint('admin', __name__)
 def admin_dashboard():
     if not current_user.is_admin:  # Certifique-se de que apenas administradores possam acessar
         flash('Você não tem permissão para acessar essa página.', 'danger')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('game.index'))
 
     users = User.query.all()  # Obtém todos os usuários
 

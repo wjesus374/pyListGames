@@ -2,63 +2,75 @@
 
 {% block head %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$.noConflict();
-jQuery(document).ready(function($) {
-
-    $('#game-search').on('input', function() {
-            const query = $(this).val();
-            if (query.length > 2) { // Inicia a busca após 3 caracteres
-                $.getJSON('/search_games', { q: query })
-                    .done(function(data) {
-                        $('#game-suggestions').empty();
-                        if (data.length) {
-                            $('#game-suggestions').show();
-                            $.each(data, function(index, game) {
-                                $('#game-suggestions').append('<li class="list-group-item" data-id="' + game.id + '">' + game.name + ' (' + game.platform + ')</li>');
-                            });
-                        } else {
-                            $('#game-suggestions').hide();
-                        }
-                    })
-                    .fail(function(jqxhr, textStatus, error) {
-                        console.error('Erro ao buscar jogos:', textStatus, error);
-                    });
-            } else {
-                $('#game-suggestions').hide();
-            }
-        });
-    
-    // Quando um item da lista for clicado
-    $(document).on('click', '#game-suggestions li', function() {
-        const selectedGame = $(this).text();
-        $('#game-search').val(selectedGame); // Preencher o campo de pesquisa
-        $('#game-suggestions').hide(); // Ocultar a lista de sugestões
-    });
-
-    // Fechar a lista se clicar fora
-    $(document).click(function(event) {
-        if (!$(event.target).closest('#game-search').length) {
-            $('#game-suggestions').hide();
-        }
-    });
-
-    $(document).on('click', '#game-suggestions li', function() {
-    const selectedGameId = $(this).data('id'); // Obtém o ID do jogo selecionado
-    window.location.href = '/add_to_wishlist/' + selectedGameId; // Redireciona para a página de adicionar à lista de desejos
-    });
-
-});
-</script>
 {% endblock %}
 
 
 {% block content %}
 
-<div class="form-group">
-    <label for="game-search">Pesquisar Jogos:</label>
-    <input type="text" id="game-search" class="form-control" placeholder="Digite o nome do jogo...">
-    <ul id="game-suggestions" class="list-group" style="display:none;"></ul>
+<div class="container">
+    <h1>Buscar e Adicionar Jogos</h1>
+
+    <!-- Campo de busca -->
+    <div class="search-container">
+        <input type="text" id="game-search" placeholder="Digite o nome do jogo" autocomplete="off">
+    </div>
+    <ul id="game-suggestions" class="suggestions"></ul>
+
+    <!-- Jogos Selecionados -->
+    <div class="selected-games-container">
+        <h2>Jogos Selecionados</h2>
+        <ul id="selected-games"></ul>
+    </div>
+
+    <!-- Botão para continuar -->
+    <form id="selected-games-form" method="POST" action="{{ url_for('game.add_to_wishlist_search') }}">
+        <input type="hidden" name="selected_games_ids" id="selected-games-ids">
+        <button type="submit" class="">Adicionar à Lista</button>
+    </form>
 </div>
+
+<script>
+    $.noConflict();
+    jQuery(document).ready(function($) {
+        let selectedGames = [];
+
+        // Busca e exibe sugestões de jogos
+        $('#game-search').on('input', function() {
+            const query = $(this).val();
+            if (query.length > 2) {
+                $.getJSON('/search_games', { q: query }, function(data) {
+                    $('#game-suggestions').empty();
+                    if (data.length) {
+                        $('#game-suggestions').show();
+                        $.each(data, function(index, game) {
+                            $('#game-suggestions').append('<li data-id="' + game.id + '">' + game.name + ' (' + game.platform + ')</li>');
+                        });
+                    } else {
+                        $('#game-suggestions').hide();
+                    }
+                });
+            } else {
+                $('#game-suggestions').hide();
+            }
+        });
+
+        // Adiciona jogo selecionado à lista
+        $('#game-suggestions').on('click', 'li', function() {
+            const gameId = $(this).data('id');
+            const gameText = $(this).text();
+
+            if (!selectedGames.includes(gameId)) {
+                selectedGames.push(gameId);
+                $('#selected-games').append('<li data-id="' + gameId + '">' + gameText + '</li>');
+            }
+
+            // Atualiza campo hidden para enviar no formulário
+            $('#selected-games-ids').val(selectedGames.join(','));
+            $('#game-suggestions').hide();
+            // Apaga o valor do campo de busca
+            $('#game-search').val('');
+        });
+    });
+</script>
 
 {% endblock %}

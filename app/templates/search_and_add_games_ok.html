@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$.noConflict();
+jQuery(document).ready(function($) {
+
+    $('#game-search').on('input', function() {
+            const query = $(this).val();
+            if (query.length > 2) { // Inicia a busca após 3 caracteres
+                $.getJSON('/search_games', { q: query })
+                    .done(function(data) {
+                        $('#game-suggestions').empty();
+                        if (data.length) {
+                            $('#game-suggestions').show();
+                            $.each(data, function(index, game) {
+                                $('#game-suggestions').append('<li class="list-group-item" data-id="' + game.id + '">' + game.name + ' (' + game.platform + ')</li>');
+                            });
+                        } else {
+                            $('#game-suggestions').hide();
+                        }
+                    })
+                    .fail(function(jqxhr, textStatus, error) {
+                        console.error('Erro ao buscar jogos:', textStatus, error);
+                    });
+            } else {
+                $('#game-suggestions').hide();
+            }
+        });
+    
+    // Quando um item da lista for clicado
+    $(document).on('click', '#game-suggestions li', function() {
+        const selectedGame = $(this).text();
+        $('#game-search').val(selectedGame); // Preencher o campo de pesquisa
+        $('#game-suggestions').hide(); // Ocultar a lista de sugestões
+    });
+
+    // Fechar a lista se clicar fora
+    $(document).click(function(event) {
+        if (!$(event.target).closest('#game-search').length) {
+            $('#game-suggestions').hide();
+        }
+    });
+
+    $(document).on('click', '#game-suggestions li', function() {
+    const selectedGameId = $(this).data('id'); // Obtém o ID do jogo selecionado
+    window.location.href = '/add_to_wishlist_one/' + selectedGameId; // Redireciona para a página de adicionar à lista de desejos
+    });
+
+});
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-group">
+    <label for="game-search">Pesquisar Jogos:</label>
+    <input type="text" id="game-search" class="form-control" placeholder="Digite o nome do jogo...">
+    <ul id="game-suggestions" class="list-group" style="display:none;"></ul>
+</div>
+
+{% endblock %}

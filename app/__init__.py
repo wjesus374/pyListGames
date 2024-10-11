@@ -22,6 +22,9 @@ def create_app():
     app.register_blueprint(game.bp)
     app.register_blueprint(admin.bp)
 
+    # Registrar a função max no ambiente Jinja2
+    app.jinja_env.globals.update(max=max, min=min)
+
     with app.app_context():
         db.create_all()
 

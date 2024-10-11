@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit {{ user_game.game.name }} in your Wishlist</h1>
+    <h1>Editar {{ user_game.game.name }} da sua lista</h1>
     <form method="POST">
-        <label for="media">Media:</label>
+        <label for="media">Mídia:</label>
         <select name="media" required>
-            <option value="physical" {% if user_game.media == 'physical' %}selected{% endif %}>Physical</option>
-            <option value="digital" {% if user_game.media == 'digital' %}selected{% endif %}>Digital</option>
+            <option value="Física" {% if user_game.media == 'Física' %}selected{% endif %}>Física</option>
+            <option value="Digital" {% if user_game.media == 'Digital' %}selected{% endif %}>Digital</option>
         </select>
 
-        <label for="rating">Rating (0-100):</label>
+        <label for="rating">Minha nota (0-100):</label>
         <input type="number" name="rating" min="0" max="100" value="{{ user_game.rating }}" required>
 
-        <button type="submit">Save Changes</button>
+        <button type="submit">Salvar</button>
     </form>
 {% endblock %}

@@ -1,15 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Login</h1>
-    <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required>
+<div class="login-container">
+    <h1 class="login-title">Login</h1>
+    <form method="POST" class="login-form">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" name="username" class="form-control" placeholder="Insira seu email" required>
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" name="password" required>
+        <div class="form-group">
+            <label for="password">Senha:</label>
+            <input type="password" name="password" class="form-control" placeholder="Insira sua senha" required>
+        </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
-    <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register here</a></p>
+
+    <p class="register-link">Não tem uma conta? <a href="{{ url_for('auth.register') }}">Registrar aqui</a></p>
+</div>
+
 {% endblock %}

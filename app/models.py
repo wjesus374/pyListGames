@@ -41,3 +41,6 @@ class UserGameAssociation(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), primary_key=True)
     media = db.Column(db.String(20), nullable=False)
     rating = db.Column(db.Integer, nullable=True)
+
+    #user = db.relationship('User', backref='wishlist_entries')
+    #game = db.relationship('Game', backref='wishlist_entries')

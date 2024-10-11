@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Adicione Informações Adicionais</h1>
+        <form method="POST" action="{{ url_for('game.save_wishlist') }}" >
+            <div class="game-grid">
+                <div class="game-card">
+                    <h3>{{ game.name }} ({{ game.platform }})</h3>
+                    
+                    <!-- Campo de mídia -->
+                    <label for="media_{{ game.id }}">Mídia</label>
+                    <select name="media_{{ game.id }}" class="game-input">
+                        <option value="Física">Física</option>
+                        <option value="Digital">Digital</option>
+                    </select>
+    
+                    <!-- Campo de nota -->
+                    <label for="rating_{{ game.id }}">Nota</label>
+                    <input type="number" name="rating_{{ game.id }}" min="0" max="100" class="game-input">
+                    
+                    <input type="hidden" name="game_ids" value="{{ game.id }}">
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button type="submit" class="submit-btn">Salvar</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
